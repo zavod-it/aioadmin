@@ -7,7 +7,10 @@ authors = [
     { name = "AliakseiYafremau", email = "aleksey.yafremau@gmail.com" }
 ]
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "aiosqlite>=0.21.0",
+    "sqlalchemy>=2.0.44",
+]
 
 [build-system]
 requires = ["setuptools>=61.0"]
