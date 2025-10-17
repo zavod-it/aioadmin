@@ -22,6 +22,7 @@ async def main():
         await conn.run_sync(Base.metadata.create_all)
     adapter = SQLAdapter(metadata=Base.metadata, engine=engine)
     print(await adapter.get_table("tasks"))
+    print(await adapter.get_detail(1, "tasks"))
 
 if __name__ == "__main__":
     asyncio.run(main())
