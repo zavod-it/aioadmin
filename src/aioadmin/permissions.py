@@ -22,10 +22,10 @@ class PermissionPolicy(Adapter):
         self.can_delete = can_delete
         self.can_edit = can_edit
     
-    async def get_table(self, pk_value: Any, table_name: str):
+    async def get_table(self, table_name: str):
         if not self.can_view:
             raise PermissionDenied("Cannot get information from a table")
-        return self.adapter.get_table(pk_value=pk_value, table_name=table_name)
+        return self.adapter.get_table(table_name=table_name)
     
     async def get_record_detail(self, pk_value: Any, table_name: str):
         if not self.can_view:
