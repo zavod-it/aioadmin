@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from aioadmin.record import sqlalchemy_to_record, Record
 from aioadmin.adapter import Adapter
 
+
 class SQLAlchemyAdapter(Adapter):
     def __init__(self, metadata: MetaData, engine: Engine):
         self.metadata = metadata

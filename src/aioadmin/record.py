@@ -1,4 +1,4 @@
-from typing import Iterable, Sequence, Tuple
+from typing import Iterable, Sequence
 from sqlalchemy.engine.result import Result
 
 
@@ -15,14 +15,14 @@ class Record:
         return self._name
 
     @property
-    def columns(self) -> Tuple[str, ...]:
+    def columns(self) -> tuple[str, ...]:
         return self._columns
 
     @property
-    def rows(self) -> Tuple[Tuple[object, ...], ...]:
+    def rows(self) -> tuple[tuple[object, ...], ...]:
         return self._rows
 
-    def __iter__(self) -> Iterable[Tuple[object, ...]]:
+    def __iter__(self) -> Iterable[tuple[object, ...]]:
         return iter(self._rows)
 
     def __len__(self) -> int:
