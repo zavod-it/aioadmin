@@ -1,19 +1,10 @@
-from sqlalchemy import String, text
-from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from aioadmin.orm.sqlalchemy import SQLAlchemyAdapter
 
+from models import Base
 
-class Base(DeclarativeBase):
-    pass
-
-class Task(Base):
-    __tablename__ = "tasks"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    description: Mapped[str] = mapped_column(String, nullable=True)
-    text: Mapped[str] = mapped_column(String)
 
 
 async def test_empty_table(in_memory_engine_factory):
