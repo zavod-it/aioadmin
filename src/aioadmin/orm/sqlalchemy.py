@@ -38,12 +38,12 @@ class SQLAlchemyAdapter(Adapter):
     @staticmethod
     async def _delete(session: AsyncSession, pk_value: Any, table: Table):
         primary_key = table.primary_key.columns[0]
-        return await session.execute(delete(table).where(primary_key == pk_value))
+        await session.execute(delete(table).where(primary_key == pk_value))
 
     @staticmethod
     async def _update(session: AsyncSession, pk_value: Any, data: dict[str, Any], table: Table):
         primary_key = table.primary_key.columns[0]
-        return await session.execute(update(table).where(primary_key == pk_value).values(**data))
+        await session.execute(update(table).where(primary_key == pk_value).values(**data))
 
     @_get_session
     async def get_table(self, table_name: str, *, session: AsyncSession) -> Record:
@@ -67,13 +67,11 @@ class SQLAlchemyAdapter(Adapter):
     @_get_session
     async def update_record(self, pk_value: Any, data: dict[str, Any], table_name: str, *, session: AsyncSession) -> Record:
         table = self.metadata.tables[table_name]
-        result = await self._update(session=session, pk_value=pk_value, data=data, table=table)
+        await self._update(session=session, pk_value=pk_value, data=data, table=table)
         await session.commit()
-        return sqlalchemy_to_record(table.name, result)
-
+        
     @_get_session
     async def delete_record(self, pk_value: Any, table_name: str, *, session: AsyncSession) -> Record:
         table = self.metadata.tables[table_name]
-        result = await self._delete(session=session, pk_value=pk_value, table=table)
+        await self._delete(session=session, pk_value=pk_value, table=table)
         await session.commit()
-        return sqlalchemy_to_record(table.name, result)
