@@ -6,7 +6,7 @@ from aioadmin.aiogram.handlers.states import Menu
 
 
 async def get_tables(adapter: Adapter, dialog_manager: DialogManager, **kwargs):
-    return { "tables": await adapter.get_tables() }
+    return { "tables": adapter.get_tables() }
 
 menu_window = Dialog(
     Window(

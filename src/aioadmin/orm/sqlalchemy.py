@@ -45,6 +45,12 @@ class SQLAlchemyAdapter(Adapter):
         primary_key = table.primary_key.columns[0]
         await session.execute(update(table).where(primary_key == pk_value).values(**data))
 
+    def get_tables(self) -> dict[str, tuple[str, ...]]:
+        return {
+            table.name: tuple(column.name for column in table.columns)
+            for table in self.metadata.tables.values()
+        }
+
     @_get_session
     async def get_table(self, table_name: str, *, session: AsyncSession) -> Record:
         table = self.metadata.tables[table_name]
@@ -69,7 +75,7 @@ class SQLAlchemyAdapter(Adapter):
         table = self.metadata.tables[table_name]
         await self._update(session=session, pk_value=pk_value, data=data, table=table)
         await session.commit()
-        
+
     @_get_session
     async def delete_record(self, pk_value: Any, table_name: str, *, session: AsyncSession) -> Record:
         table = self.metadata.tables[table_name]
