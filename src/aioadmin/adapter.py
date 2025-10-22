@@ -6,9 +6,13 @@ from aioadmin.record import Record
 
 class Adapter(ABC):
     @abstractmethod
+    async def get_tables(self) -> dict[tuple[str]]:
+        raise NotImplementedError
+
+    @abstractmethod
     async def get_table(self, table_name: str) -> Record:
         raise NotImplementedError
-    
+
     @abstractmethod
     async def get_record_detail(self, pk_value: Any, table_name: str) -> Record:
         raise NotImplementedError

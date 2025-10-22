@@ -22,6 +22,11 @@ class PermissionPolicy(Adapter):
         self.can_delete = can_delete
         self.can_edit = can_edit
     
+    async def get_tables(self):
+        if not self.can_view:
+            raise PermissionDeniedError("Cannot get information of tables")
+        return await self.adapter.get_tables()
+
     async def get_table(self, table_name: str):
         if not self.can_view:
             raise PermissionDeniedError("Cannot get information from a table")
